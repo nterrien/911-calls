@@ -23,7 +23,7 @@ GET <nom de votre index>/_count
 
 ```
 ## 1
-POST /911_calls/_search
+POST /911-calls/_search
 {
   "size": 0,
   "aggs": {
@@ -36,9 +36,24 @@ POST /911_calls/_search
 }
 
 ## 2
+POST /911-calls/_search
+{
+  "size": 0,
+  "aggs": {
+    "counts": {
+      "date_histogram": {
+        "field": "timeStamp",
+        "order": {
+          "_count": "desc"
+        },
+        "calendar_interval": "month"
+      }
+    }
+  }
+}
 
 ## 3
-POST /911_calls/_search
+POST /911-calls/_search
 {
   "size": 0,
   "query": {
@@ -57,7 +72,26 @@ POST /911_calls/_search
 }
 
 ## 4
-
+POST /911-calls/_search
+{
+  "size":0,
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": {
+        "geo_distance": {
+          "distance": "500m",
+          "location": {
+            "lat": 40.241493,
+            "lon": -75.283783
+          }
+        }
+      }
+    }
+  }
+}
 ```
 
 ## Kibana

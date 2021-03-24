@@ -21,20 +21,10 @@ async function run() {
             // TODO configurer l'index https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
             mappings: {
                 properties: {
-                    position: {
-                        properties: {
-                            "location": {
-                                "type": "geo_point"
-                            }
-                        }
+                    location: {
+                        "type": "geo_point"
                     },
-                    desc: { "type": "text" },
-                    zip: { "type": "text" },
-                    title: { "type": "text" },
-                    category: { "type": "text" },
-                    timeStamp: { "type": "date" },
-                    twp: { "type": "text" },
-                    addr: { "type": "text" }
+                    timeStamp: { "type": "date" }
                 }
             }
         }
@@ -46,12 +36,12 @@ async function run() {
         .on('data', data => {
             // TODO créer l'objet call à partir de la ligne
             const call = {
-                'position': { location: { 'lat': +(data.lat), 'lon': +(data.lng) } },
+                'location': { 'lat': parseFloat(data.lat), 'lon': parseFloat(data.lng) },
                 'desc': data.desc,
                 'zip': data.zip,
                 'category': data.title.split(":")[0],
                 'type': data.title.split(": ")[1],
-                'timeStamp': new Date(data.timeStamp),
+                'timeStamp': data.timeStamp.split(" ")[0].trim(),
                 'twp': data.twp,
                 'addr': data.addr
             };
@@ -60,7 +50,7 @@ async function run() {
         .on('end', async() => {
             console.log(calls[0])
             const body = calls.reduce((calls, call) => {
-                calls.push({ index: { _index: '911_calls', _type: '_doc' } })
+                calls.push({ index: { _index: '911-calls', _type: '_doc' } })
                 calls.push(call)
                 return calls
             }, []);
