@@ -36,7 +36,24 @@ POST /911_calls/_search
 }
 
 // 2
+
 // 3
+{
+  "size": 0,
+  "query": {
+    "match": {
+      "type": "OVERDOSE"
+    }
+  },
+  "aggs": {
+    "my-agg-name": {
+      "terms": {
+        "field": "twp.keyword"
+      }
+    }
+  }
+}
+
 // 4
 ```
 

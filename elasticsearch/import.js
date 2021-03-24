@@ -46,8 +46,8 @@ async function run() {
                 },
                 'desc': data.desc,
                 'zip': data.zip,
-                'title': data.title,
                 'category': data.title.split(":")[0],
+                'type':data.title.split(": ")[1],
                 'timeStamp': Date.parse(data.timeStamp),
                 'twp': data.twp,
                 'addr': data.addr
