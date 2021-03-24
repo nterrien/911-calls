@@ -76,6 +76,25 @@ Le résultat attendu est :
 | ----- | ----- | ------- |
 | 75589 | 23056 | 54549   |
 
+**Requêtes**
+
+```elasticsearch
+POST /911_calls/_search
+{
+  "size": 0,
+  "aggs": {
+    "teams": {
+      "terms": {
+        "field": "category.keyword"
+      }
+    }
+  }
+}
+```
+
+```mongodb
+
+```
 
 ### Trouver les 3 mois ayant comptabilisés le plus d'appels
 
@@ -84,6 +103,17 @@ Le résultat attendu est :
 | 01/2016 | 10/2016 | 12/2016 |
 | ------- | ------- | ------- |
 | 13096   | 12502   | 12162   |
+
+**Requêtes**
+
+```elasticsearch
+POST /911_calls/_search
+
+```
+
+```mongodb
+
+```
 
 
 ### Trouver le top 3 des villes avec le plus d'appels pour overdose
@@ -95,6 +125,16 @@ Le résultat attendu est :
 | 203       | 180        | 110            |
 
 
+**Requêtes**
+
+```elasticsearch
+
+```
+
+```mongodb
+
+```
+
 ### Compter le nombre d'appels autour de Lansdale dans un rayon de 500 mètres
 
 Coordonnées GPS du quartier de *Lansdale, PA, USA* :
@@ -103,5 +143,18 @@ Coordonnées GPS du quartier de *Lansdale, PA, USA* :
 * Longitude : -75.283783
 
 Le résultat attendu est **717**.
+
+
+**Requêtes**
+
+```elasticsearch
+
+```
+
+```mongodb
+
+```
+
+
 
 Pour vous aider, vous pouvez jeter un oeil à [$near](https://docs.mongodb.com/manual/reference/operator/query/near/index.html) et [geo_distance](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-distance-query.html)
