@@ -48,7 +48,6 @@ async function run() {
             calls.push(call)
         })
         .on('end', async() => {
-            console.log(calls[0])
             const body = calls.reduce((calls, call) => {
                 calls.push({ index: { _index: '911-calls', _type: '_doc' } })
                 calls.push(call)
@@ -57,7 +56,7 @@ async function run() {
             // TODO insérer les données dans ES en utilisant l'API de bulk https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docs-bulk.html
             client.bulk({ refresh: true, body }, (err, resp) => {
                 if (err) console.trace(err.message);
-                else console.log(`Inserted ${resp.body.items.length} ` + JSON.stringify(resp.body.items[0]));
+                else console.log(`Inserted ${resp.body.items.length}`);
                 client.close();
             });
         });
