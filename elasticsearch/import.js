@@ -21,8 +21,9 @@ async function run() {
             // TODO configurer l'index https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html
             mappings: {
                 properties: {
-                    lat: { "type": "float" },
-                    lng: { "type": "float" },
+                    position: {
+                        "type": "geo_point"
+                    },
                     desc: { "type": "text" },
                     zip: { "type": "text" },
                     title: { "type": "text" },
@@ -40,15 +41,12 @@ async function run() {
         .on('data', data => {
             // TODO créer l'objet call à partir de la ligne
             const call = {
-                'location': {
-                    'lat': data.lat,
-                    'lng': data.lng
-                },
+                'position': { 'lat': +(data.lat), 'lon': +(data.lng) },
                 'desc': data.desc,
                 'zip': data.zip,
                 'title': data.title,
                 'category': data.title.split(":")[0],
-                'timeStamp': Date.parse(data.timeStamp),
+                'timeStamp': new Date(data.timeStamp),
                 'twp': data.twp,
                 'addr': data.addr
             };
