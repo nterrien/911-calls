@@ -22,7 +22,22 @@ GET <nom de votre index>/_count
 À vous de jouer ! Écrivez les requêtes ElasticSearch permettant de résoudre les problèmes posés.
 
 ```
-TODO : ajouter les requêtes ElasticSearch ici
+// 1
+POST /911_calls/_search
+{
+  "size": 0,
+  "aggs": {
+    "teams": {
+      "terms": {
+        "field": "category.keyword"
+      }
+    }
+  }
+}
+
+// 2
+// 3
+// 4
 ```
 
 ## Kibana
