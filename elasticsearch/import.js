@@ -22,11 +22,16 @@ async function run() {
             mappings: {
                 properties: {
                     position: {
-                        "type": "geo_point"
+                        properties: {
+                            "location": {
+                                "type": "geo_point"
+                            }
+                        }
                     },
                     desc: { "type": "text" },
                     zip: { "type": "text" },
                     title: { "type": "text" },
+                    category: { "type": "text" },
                     timeStamp: { "type": "date" },
                     twp: { "type": "text" },
                     addr: { "type": "text" }
@@ -41,16 +46,12 @@ async function run() {
         .on('data', data => {
             // TODO créer l'objet call à partir de la ligne
             const call = {
-                'position': { 'lat': +(data.lat), 'lon': +(data.lng) },
+                'position': { location: { 'lat': +(data.lat), 'lon': +(data.lng) } },
                 'desc': data.desc,
                 'zip': data.zip,
                 'category': data.title.split(":")[0],
-<<<<<<< HEAD
-                'type':data.title.split(": ")[1],
-                'timeStamp': Date.parse(data.timeStamp),
-=======
+                'type': data.title.split(": ")[1],
                 'timeStamp': new Date(data.timeStamp),
->>>>>>> 22b346b8fb7843e1c50a190a1d01237149166cab
                 'twp': data.twp,
                 'addr': data.addr
             };
@@ -66,7 +67,7 @@ async function run() {
             // TODO insérer les données dans ES en utilisant l'API de bulk https://www.elastic.co/guide/en/elasticsearch/reference/7.x/docs-bulk.html
             client.bulk({ refresh: true, body }, (err, resp) => {
                 if (err) console.trace(err.message);
-                else console.log(`Inserted ${resp.body.items.length}`);
+                else console.log(`Inserted ${resp.body.items.length} ` + JSON.stringify(resp.body.items[0]));
                 client.close();
             });
         });

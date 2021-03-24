@@ -38,6 +38,7 @@ POST /911_calls/_search
 ## 2
 
 ## 3
+POST /911_calls/_search
 {
   "size": 0,
   "query": {
@@ -48,7 +49,8 @@ POST /911_calls/_search
   "aggs": {
     "my-agg-name": {
       "terms": {
-        "field": "twp.keyword"
+        "field": "twp.keyword",
+        "size": 3
       }
     }
   }
